@@ -130,6 +130,11 @@
           "default": true,
           "type": "boolean",
           "description": "A flag which indicates whether to show references for interfaces"
+        },
+        "typelens.showReferencesForVariables": {
+          "default": true,
+          "type": "boolean",
+          "description": "A flag which indicates whether to show references for variables"
         }
       }
     }
