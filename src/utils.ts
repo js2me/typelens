@@ -40,7 +40,7 @@ export const isDocumentSymbol = (symbol: LensSymbol): symbol is DocumentSymbol =
 
 export const symbolTypeSpecificChecks: Partial<Record<SymbolKind, (name: string, range: Range, document: TextDocument) => boolean | void>> = {
   [SymbolKind.Variable]: (name, range, document) => {
-    if (document.languageId === "typescript") {
+    if (document.languageId === "typescript" || document.languageId === "typescriptreact") {
       const text = document.getText(new Range(new Position(range.start.line, 0), range.end));
       return !range.start.character || (!text.indexOf('type') || !text.indexOf('export') || (range.start.character === 6 && !text.indexOf('const')));
     }

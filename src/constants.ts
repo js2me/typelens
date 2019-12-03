@@ -15,5 +15,6 @@ export const SymbolKindInterst: Record<string, SymbolKind[]> = {
   scss: cssSymbolKindSet,
   less: cssSymbolKindSet,
   typescript: [...standardSymbolKindSet, SymbolKind.Enum],
+  typescriptreact: [...standardSymbolKindSet, SymbolKind.Enum],
   javascript: standardSymbolKindSet
 };
