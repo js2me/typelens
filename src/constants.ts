@@ -14,6 +14,6 @@ export const cssSymbolKindSet = [SymbolKind.Method, SymbolKind.Function, SymbolK
 export const SymbolKindInterst: Record<string, SymbolKind[]> = {
   scss: cssSymbolKindSet,
   less: cssSymbolKindSet,
-  typescript: standardSymbolKindSet,
+  typescript: [...standardSymbolKindSet, SymbolKind.Enum],
   javascript: standardSymbolKindSet
 };

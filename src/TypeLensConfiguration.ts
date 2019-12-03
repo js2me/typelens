@@ -4,7 +4,7 @@ export class TypeLensConfiguration {
   public excludeself: boolean = true;
   public singular: string = "{0} reference";
   public plural: string = "{0} references";
-  public noreferences: string = "no references found for {0}";
+  public noreferences: string = "no references";
   public unusedcolor: string = "#999";
   public decorateunused: boolean = true;
   public skiplanguages: string[] = ["csharp"];
@@ -16,4 +16,5 @@ export class TypeLensConfiguration {
   public showReferencesForClasses = true;
   public showReferencesForInterfaces = true;
   public showReferencesForVariables = true;
+  public showReferencesForEnums = true;
 }

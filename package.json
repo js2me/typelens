@@ -83,7 +83,7 @@
           "type": "string"
         },
         "typelens.noreferences": {
-          "default": "no references found for {0}",
+          "default": "no references",
           "description": "Localization for the case when there are no references found",
           "type": "string"
         },
@@ -135,6 +135,11 @@
           "default": true,
           "type": "boolean",
           "description": "A flag which indicates whether to show references for variables"
+        },
+        "typelens.showReferencesForEnums": {
+          "default": true,
+          "type": "boolean",
+          "description": "A flag which indicates whether to show references for enums"
         }
       }
     }

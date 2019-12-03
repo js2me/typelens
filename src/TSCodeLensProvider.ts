@@ -9,7 +9,7 @@ import {
 } from "vscode";
 import { Minimatch } from "minimatch";
 import { AppConfiguration } from "./AppConfiguration";
-import { LensSymbol, getFlattenSymbols, isSymbolSupportReferences } from './utils';
+import { LensSymbol, getFlattenSymbols, isSymbolSupportReferences, symbolTypeSpecificChecks } from './utils';
 
 class UnusedDecoration {
   ranges: vscode.Range[] = [];
@@ -117,6 +117,7 @@ export class TSCodeLensProvider implements vscode.CodeLensProvider {
               }
 
             const position = document.offsetAt(resultingRange.start);
+
             if (!usedPositions[position]) {
               usedPositions[position] = 1;
               references.push(new MethodReferenceLens(resultingRange, document.uri, symbolInfo.name));

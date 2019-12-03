@@ -1,4 +1,4 @@
-import { SymbolInformation, DocumentSymbol, Range, SymbolKind, window, TextDocument } from "vscode";
+import { SymbolInformation, DocumentSymbol, Range, SymbolKind, window, TextDocument, Position } from "vscode";
 import { SymbolKindInterst, standardSymbolKindSet } from "./constants";
 import { AppConfiguration } from "./AppConfiguration";
 
@@ -38,6 +38,16 @@ export const isDocumentSymbol = (symbol: LensSymbol): symbol is DocumentSymbol =
   (symbol as DocumentSymbol).children != null
 
 
+export const symbolTypeSpecificChecks: Partial<Record<SymbolKind, (name: string, range: Range, document: TextDocument) => boolean | void>> = {
+  [SymbolKind.Variable]: (name, range, document) => {
+    if (document.languageId === "typescript") {
+      const text = document.getText(new Range(new Position(range.start.line, 0), range.end));
+      return !range.start.character || (!text.indexOf('type') || !text.indexOf('export') || (range.start.character === 6 && !text.indexOf('const')));
+    }
+    return false
+  }
+}
+
 export const isSymbolSupportReferences = (
   { name, kind, range }: FlattenSymbol,
   document: TextDocument,
@@ -56,6 +66,7 @@ export const isSymbolSupportReferences = (
     kind === SymbolKind.Property && settings.showReferencesForProperties ||
     kind === SymbolKind.Class && settings.showReferencesForClasses ||
     kind === SymbolKind.Interface && settings.showReferencesForInterfaces ||
+    kind === SymbolKind.Enum && settings.showReferencesForEnums ||
     kind === SymbolKind.Variable && settings.showReferencesForVariables;
 
   const isUnsupportedSymbol =
@@ -64,5 +75,5 @@ export const isSymbolSupportReferences = (
     name.endsWith(" callback") ||
     settings.ignorelist.indexOf(name) > -1;
 
-  return isSymbolKindAllowed && !isUnsupportedSymbol;
+  return isSymbolKindAllowed && !isUnsupportedSymbol && (!symbolTypeSpecificChecks[kind] || symbolTypeSpecificChecks[kind](name, range, document));
 }
